@@ -17,10 +17,13 @@ import java.util.Set;
  */
 public class ShortestPath {
 
-    Map<String,List<Node>> pic = new HashMap<>();
-    Set<String> existsNodes = new HashSet<>();
-    LinkedList<Node> pathList = new LinkedList<>();
+    Map<String,List<Node>> pic = new HashMap<>();   //存储图
+    Set<String> existsNodes = new HashSet<>();  //节点去重
+    LinkedList<Node> pathList = new LinkedList<>(); //FIFO队列
 
+    /**
+     * 图的初始化
+     */
     private void initPic(){
         pic.put("a",ImmutableList.of(new Node("c"),new Node("e")));
         pic.put("b",ImmutableList.of(new Node("a"),new Node("g")));
@@ -31,14 +34,24 @@ public class ShortestPath {
         pic.put("g",ImmutableList.<Node>of());
     }
 
+    /**
+     * 构造块中进行图的初始化工作
+     */
     public ShortestPath(){
         initPic();
     }
 
+    /**
+     * 路径查找方法的重载
+     * 为调用方便，将参数source由<code>Node</code>类型重载为<code>String</code>类型
+     */
     public void findPath(String source,final String target){
         findPath(new Node(source),target);
     }
 
+    /**
+     * 核心方法，路径查找
+     */
     private void findPath(Node source,final String target){
         List<Node> relations = pic.get(source.getNode());
         for(Node node:relations){
