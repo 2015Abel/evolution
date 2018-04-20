@@ -10,7 +10,7 @@ import java.util.LinkedList;
  * @date: 2018-04-18 14:06
  */
 public class BucketSort {
-    int arr[] = {67, 29, 74, 52, 13, 16, 15, 59, 20, 61, 43, 38};
+    int arr[] = {67, 29, 74, 52, 13, 16, 15, 59, 20, 61, 43, 38};   //待排序数组
 
     public static void main(String[] args) {
         BucketSort bucketSort = new BucketSort();
@@ -18,21 +18,30 @@ public class BucketSort {
         System.out.println(res);
     }
 
+    /**
+     * @description: 桶排序
+     * @return: java.util.LinkedList<java.lang.Integer>
+     * @date: 2018/4/20 16:22
+     */
     public LinkedList<Integer> doOrder() {
-        InitParam initParam = firstLoop();
-        //两、三个桶其实也意义不大？
-        LinkedList<Integer>[] bucket = new LinkedList[initParam.bucketNum];
+        InitParam initParam = firstLoop();  //首次遍历，获取最大值、最小值、桶个数等信息
+
+        LinkedList<Integer>[] bucket = new LinkedList[initParam.bucketNum]; //桶初始化
+
+        // <<<<<<<  入桶方法 >>>>>>>
         for(int i:arr){
-            int bucketIndex = (i-initParam.min)/elementNum;
+            int bucketIndex = (i-initParam.min)/elementNum; //计算元素归属于哪个桶
             LinkedList<Integer> list = bucket[bucketIndex];
             if(list==null){
                 list = new LinkedList<>();
                 bucket[bucketIndex] = list;
             }
+
+            //入桶的同时进行桶内排序
             addBySort(i,list);
         }
 
-        //出桶
+        // <<<<<<<  出桶方法 >>>>>>>
         LinkedList<Integer> resList = Lists.newLinkedList();
         for(LinkedList<Integer> bucketElement:bucket){
             if(bucketElement!=null && bucketElement.size()>0){
@@ -67,10 +76,13 @@ public class BucketSort {
 
     final int elementNum = 10;
 
+    /**
+     * 封装参数
+     */
     class InitParam {
-        int min;
-        int max;
-        int bucketNum;
+        int min;    //最小值
+        int max;    //最大值
+        int bucketNum;  //桶个数
 
         public InitParam(int min, int max, int bucketNum) {
             this.min = min;
@@ -96,7 +108,7 @@ public class BucketSort {
                 max = i;
             }
         }
-        int addition = (max - min) % elementNum == 0 ? 0 : 1;
+        int addition = (max - min) % elementNum == 0 ? 0 : 1;   //如果有余数，桶个数+1
         int bucketNum = (max - min) / elementNum + addition;
 
         return new InitParam(min, max, bucketNum);
