@@ -1,8 +1,6 @@
 package com.evolution.common;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 /**
  * @Program: evolution
@@ -12,9 +10,7 @@ import lombok.ToString;
  */
 public class LombokDemo {
 
-    @Getter
-    @Setter
-    @ToString
+    @Data
     class Student{
         private String name;
         private int age;
