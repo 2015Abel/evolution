@@ -1,8 +1,22 @@
 package com.evolution.es;
 
+import com.evolution.es.entity.EqAndroid;
+import com.evolution.es.entity.EqImei;
+import com.evolution.es.repository.AndroidRepository;
+import com.evolution.es.repository.ImeiRepository;
+import com.google.common.collect.ImmutableMap;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
  * @description: TODO 类描述
@@ -13,7 +27,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(classes = ESStarter.class)
 public class ESRepositoryTest {
 
-    /*@Resource
+    @Resource
     AndroidRepository androidRepository;
 
     @Resource
@@ -54,7 +68,7 @@ public class ESRepositoryTest {
 //            }
         }
 
-    }*/
+    }
 
 
 }

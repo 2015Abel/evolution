@@ -2,7 +2,7 @@ package com.evolution.guava;
 
 import com.google.common.base.Splitter;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author: liuzijian
@@ -10,8 +10,8 @@ import java.util.List;
  */
 public class SplitterDemo {
     public static void main(String[] args) {
-        String param = "aaa=a&bbb=b";
-        List<String> stringList = Splitter.on("&").splitToList(param);
-        System.out.println(stringList);
+        String param = "aaa=a&&bbb=b";
+        Map<String,String> stringMap = Splitter.on("&").omitEmptyStrings().withKeyValueSeparator("=").split(param);
+        System.out.println(stringMap);
     }
 }

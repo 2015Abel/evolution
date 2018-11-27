@@ -1,24 +1,7 @@
 package com.evolution.es;
 
-import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequest;
-import org.elasticsearch.action.get.MultiGetItemResponse;
-import org.elasticsearch.action.get.MultiGetResponse;
-import org.elasticsearch.client.Requests;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.elasticsearch.common.xcontent.XContentFactory;
-import org.elasticsearch.transport.client.PreBuiltTransportClient;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-
-import java.io.IOException;
-import java.net.InetAddress;
-import java.util.Iterator;
 
 /**
  * @description: TODO 类描述
@@ -27,14 +10,17 @@ import java.util.Iterator;
  */
 @RunWith(JUnit4.class)
 public class JavaApiTest {
-    TransportClient client = null;
+    /*TransportClient client = null;
 
     @Before
     public void initClient() {
         try {
 //            TransportAddress
-            client = new PreBuiltTransportClient(Settings.EMPTY)
-                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9300));
+            Settings settings = Settings.builder().put("cluster.name","my-application").build();
+            client = new PreBuiltTransportClient(settings)
+                    .addTransportAddress(new TransportAddress(new InetSocketAddress("127.0.0.1",9300)));
+//            client = new TransportClient.Builder().build()
+//                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(address),port));
         } catch (Exception ex) {
             ex.printStackTrace();
             if(client!=null){
@@ -56,7 +42,13 @@ public class JavaApiTest {
                 .add("imei","apus","i444").get();
         Iterator<MultiGetItemResponse> iterator = response.iterator();
         while (iterator.hasNext()){
-            System.out.println("<<<<<" + iterator.next().getResponse().getSourceAsString());
+            GetResponse getReponse = iterator.next().getResponse();
+            if(getReponse!=null){
+                Map<String,Object> map = getReponse.getSource();
+                for(Map.Entry entry:map.entrySet()){
+                    System.out.println(">>>> "+entry.getKey()+":"+entry.getValue());
+                }
+            }
         }
     }
 
@@ -84,5 +76,5 @@ public class JavaApiTest {
                     .field("camera",111)
                 .endObject();
         client.prepareIndex().setIndex("mac").setType("apus").setId("m123").setSource(productBuilder).get();
-    }
+    }*/
 }
