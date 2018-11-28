@@ -23,7 +23,7 @@ public class BinaryNode<V> {
     // id ( 数据库表`id`)
     private Integer id;
 
-    // val集合 （数据库表`数据`）
+    // val （数据库表`数据`）
     private V val;
 
     // 左节点
