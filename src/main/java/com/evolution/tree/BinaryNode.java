@@ -54,7 +54,7 @@ public class BinaryNode<V> {
         }
 
         if(idCheck){
-            boolean idExists = DBUtil.add(tabName,id);
+            boolean idExists = MajorKeyValidator.add(tabName,id);
             if(idExists){
                 throw new RuntimeException(String.format("id=%d 已存在！",id));
             }
@@ -128,7 +128,7 @@ public class BinaryNode<V> {
         }
 
         if(id==tree.id){
-            DBUtil.del(tabName,id);
+            MajorKeyValidator.del(tabName,id);
 
             //单子
             if(tree.getLeftNode()==null && tree.getRightNode()!=null){
