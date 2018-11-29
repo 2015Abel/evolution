@@ -1,28 +1,27 @@
 package com.evolution.common;
 
-import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Maps;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @description: TODO 类描述
  * @author: liuzijian
- * @date: 2018-04-20 17:59
- */
+ * @create: 2018-04-22 23:04
+ **/
 public class MapDemo {
     public static void main(String[] args) {
+        Map<Integer,String> map = Maps.newTreeMap();
+        map.put(5,"5a");
+        map.put(1,"1b");
+        map.put(9,"9c");
+        map.put(99,"9c");
+        map.put(87,"9c");
+        map.put(32,"9c");
+        map.put(11,"9c");
 
-
-        Map<String,String> map = new HashMap<>();
-        map.put("a","a");
-        map.put("b","b");
-        System.out.println(JSON.toJSONString(new ArrayList<Map.Entry<String,String>>(map.entrySet())));
-
-
-
+        for(Integer i:map.keySet()){
+            System.out.println(i);
+        }
     }
 }
-
-

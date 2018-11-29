@@ -9,11 +9,13 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * @description: DBUtil
+ * @description: MajorKeyValidator
+ *      模拟数据库表主键的唯一性验证
+ *
  * @author: liuzijian
  * @date: 2018-11-27 13:52
  */
-public class DBUtil {
+public class MajorKeyValidator {
     private static final Map<String,Set<Integer>> tables = new ConcurrentHashMap<>();
 
     private static final Lock lock = new ReentrantLock();

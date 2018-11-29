@@ -24,7 +24,7 @@ public class BinaryNode<V> {
     // id ( 数据库表`id`)
     private Integer id;
 
-    // val集合 （数据库表`数据`）
+    // val （数据库表`数据`）
     private V val;
 
     // 左节点
@@ -55,7 +55,7 @@ public class BinaryNode<V> {
         }
 
         if(idCheck){
-            boolean idExists = DBUtil.add(tabName,id);
+            boolean idExists = MajorKeyValidator.add(tabName,id);
             if(idExists){
                 throw new RuntimeException(String.format("id=%d 已存在！",id));
             }
@@ -125,7 +125,7 @@ public class BinaryNode<V> {
         }
 
         if(id==tree.id){
-            DBUtil.del(tabName,id);
+            MajorKeyValidator.del(tabName,id);
 
             //单子
             if(tree.getLeftNode()==null && tree.getRightNode()!=null){
