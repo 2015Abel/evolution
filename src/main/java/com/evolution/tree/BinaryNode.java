@@ -2,6 +2,7 @@ package com.evolution.tree;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -82,23 +83,19 @@ public class BinaryNode<V> {
         return searchRange(min,max,collection,this);
     }
 
-    private Collection<V> searchRange(Integer min, Integer max, Collection<V> collection,BinaryNode<V> tree){
-        if(tree==null){
-            return collection;
-        }
-
-        //找到min的上界
-        if(min<tree.getId()){
+    private Collection<V> searchRange(Integer min, Integer max, Collection<V> collection,BinaryNode<V> tree){//当前节点与min比较，如果大于min，递归查看当前节点的左节点
+        //当前节点与min比较，如果大于min，递归查看当前节点的左节点（如果有左节点的话）
+        if(min<tree.getId() && tree.leftNode!=null){
             searchRange(min,max,collection,tree.leftNode);
         }
 
-        //当前元素在范围内，则放入结果集
+        //当前节点在范围内，则放入结果集
         if(min<=tree.getId() && max>=tree.getId()){
             collection.add(tree.getVal());
         }
 
-        //右节点符合条件，把右节点作根递归
-        if(tree.getId()<max){
+        //当前节点与max比较，如果小于max，递归查看当前节点的右节点（如果有右节点的话）
+        if(tree.getId()<max && tree.rightNode!=null){
             searchRange(min,max,collection,tree.rightNode);
         }
 
@@ -163,5 +160,36 @@ public class BinaryNode<V> {
         }
         BinaryNode min = findMin(tree.leftNode);
         return min;
+    }
+
+
+    /**
+     * 中序遍历达到排序效果
+     * @return
+     */
+    public Collection<V> sort(){
+        Collection<V> resList = new LinkedList<>();
+        return sort(this,resList);
+    }
+
+    LinkedList<BinaryNode<V>> nodeStack = new LinkedList<>();
+
+    //栈来记录路径
+    private Collection<V> sort(BinaryNode<V> tree,Collection<V> collection){
+        if(tree==null){
+            return collection;
+        }
+
+        nodeStack.add(tree);
+        sort(tree.leftNode,collection);
+        while (!CollectionUtils.isEmpty(nodeStack)){
+            BinaryNode<V> temp = nodeStack.removeLast();
+            collection.add(temp.getVal());
+            if(temp.rightNode!=null){
+                sort(temp.rightNode,collection);
+            }
+        }
+
+        return collection;
     }
 }

@@ -4,7 +4,7 @@ import com.evolution.es.entity.EqAndroid;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**
- * @description: TODO 类描述
+ * @description: AndroidRepository
  * @author: liuzijian
  * @date: 2018-05-16 10:03
  */

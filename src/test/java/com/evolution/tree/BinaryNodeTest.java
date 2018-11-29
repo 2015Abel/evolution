@@ -34,7 +34,7 @@ public class BinaryNodeTest {
 
     @Test
     public void testSearchRange(){
-        Collection collection = tree.searchRange(28,40);
+        Collection collection = tree.searchRange(34,51);
         System.out.println(collection);
     }
 
@@ -48,6 +48,11 @@ public class BinaryNodeTest {
     public void testRemove(){
         tree = tree.remove(30);
         System.out.println();
+    }
+
+    @Test
+    public void testSort(){
+        System.out.println(tree.sort());
     }
 
 }
