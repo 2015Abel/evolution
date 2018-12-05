@@ -172,9 +172,9 @@ public class BinaryNode<V> {
         return sort(this,resList);
     }
 
+    //栈，用来记录路径
     LinkedList<BinaryNode<V>> nodeStack = new LinkedList<>();
 
-    //栈来记录路径
     private Collection<V> sort(BinaryNode<V> tree,Collection<V> collection){
         if(tree==null){
             return collection;
@@ -191,5 +191,22 @@ public class BinaryNode<V> {
         }
 
         return collection;
+    }
+
+    public Collection<V> sort2(){
+        return sort(this);
+    }
+
+    LinkedList<V> valList = new LinkedList<>();
+
+    private Collection<V> sort(BinaryNode<V> tree){
+        if(tree==null){
+            return valList;
+        }
+
+        sort(tree.leftNode);
+        valList.add(tree.getVal());
+        sort(tree.rightNode);
+        return valList;
     }
 }

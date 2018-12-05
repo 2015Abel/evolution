@@ -55,4 +55,9 @@ public class BinaryNodeTest {
         System.out.println(tree.sort());
     }
 
+    @Test
+    public void testSort2(){
+        System.out.println(tree.sort2());
+    }
+
 }
