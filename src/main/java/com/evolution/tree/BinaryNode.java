@@ -193,6 +193,10 @@ public class BinaryNode<V> {
         return collection;
     }
 
+    /**
+     * 中序遍历2，这种方式更简单
+     * @return
+     */
     public Collection<V> sort2(){
         return sort(this);
     }
