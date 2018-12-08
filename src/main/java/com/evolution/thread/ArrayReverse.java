@@ -1,4 +1,4 @@
-package com.evolution.algorithm.demo;
+package com.evolution.thread;
 
 /**
  * @description: 数组反转
