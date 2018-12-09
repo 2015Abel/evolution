@@ -177,49 +177,63 @@ public class AVLNode<V>{
         int i = 1;
         StringBuilder idBu = new StringBuilder();
         StringBuilder linkBu = new StringBuilder();
-        LinkedList<Integer> nextLineIdSpaceNum = new LinkedList<>();
+        LinkedList<Integer> nextLineIdPositions = new LinkedList<>();
         while (i<=maxIndex){
             LinkedList<Printer> printers = printMap.get(i);
-            int last = 0;
+            int lastIdLen = 0;
+            int lastIdPosition = 0;
             for(Printer printer:printers){
-                int spaceNum;
-                if(CollectionUtils.isEmpty(nextLineIdSpaceNum)){
-                    spaceNum = 20;
+                int position;
+                if(CollectionUtils.isEmpty(nextLineIdPositions)){
+                    position = 20;
                 }else {
-                    spaceNum = nextLineIdSpaceNum.removeFirst()-last;
+                    position = nextLineIdPositions.removeFirst()-idLen(printer.getId())/2;
+                    if(position<=lastIdPosition+lastIdLen){
+                        position+=idLen(printer.getId())/2;
+                    }
                 }
-                last += spaceNum;
-                idBu.append(createSpace(spaceNum)).append(printer.getId());
+                lastIdPosition = position;
+                lastIdLen = idLen(printer.getId());
+                appendAt(idBu,position,printer.getId()+"");
 
                 if(!Strings.isNullOrEmpty(printer.getLeftChildLink())
                         || !Strings.isNullOrEmpty(printer.getRightChildLink())){
-                    String links = linkBu.toString().replace(" ","");
-                    int spaceNum2 = idBu.length()-(idBu.lastIndexOf("\n")==-1?0:idBu.lastIndexOf("\n"))
-                                    -(printer.getId()+"").length()-linkBu.length()-links.length();
-                    linkBu.append(createSpace(spaceNum2));
+                    int linkPosition = idBu.length()-idLen(printer.getId());
                     if(!Strings.isNullOrEmpty(printer.getLeftChildLink())){
-                        nextLineIdSpaceNum.add(spaceNum2-1);
-                        linkBu.append(printer.getLeftChildLink());
+                        appendAt(linkBu,linkPosition-idLen(printer.getId())/2,printer.getLeftChildLink());
+                        nextLineIdPositions.add(linkPosition-idLen(printer.getId())/2);
                     }
 
                     if(!Strings.isNullOrEmpty(printer.getRightChildLink())){
-                        if(!Strings.isNullOrEmpty(printer.getLeftChildLink())){
-                            nextLineIdSpaceNum.add(spaceNum2);
-                        }else {
-                            nextLineIdSpaceNum.add(spaceNum2+1);
-                        }
-                        linkBu.append(printer.getRightChildLink());
+//                        if(Strings.isNullOrEmpty(printer.getLeftChildLink())){
+//                            linkPosition+=2;
+//                        }
+                        appendAt(linkBu,linkPosition+idLen(printer.getId()),printer.getRightChildLink());
+                        nextLineIdPositions.add(linkPosition+idLen(printer.getId())+1);
                     }
                 }
             }
-            idBu.append("\n");
-            idBu.append(linkBu).append("\n");
+            System.out.println(idBu.toString());
+            System.out.println(linkBu.toString());
+            idBu.setLength(0);
             linkBu.setLength(0);
             i++;
 //            String singleRes = idBu.toString();
 //            System.out.println(singleRes);
         }
-        System.out.println(idBu);
+
+        map = new TreeMap<>();
+    }
+
+    private int idLen(Integer id){
+        return (id+"").length();
+    }
+
+    private StringBuilder appendAt(StringBuilder bu,int position,String param){
+        while (bu.length()<position){
+            bu.append(" ");
+        }
+        return bu.append(param);
     }
 
     private String createSpace(int num){
