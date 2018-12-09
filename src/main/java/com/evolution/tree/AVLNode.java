@@ -1,7 +1,13 @@
 package com.evolution.tree;
 
+import com.google.common.base.Strings;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.util.CollectionUtils;
+
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @description: AVL-Tree，查找二叉树基础上增加旋转，得到平衡查找二叉树AVL
@@ -164,6 +170,109 @@ public class AVLNode<V>{
             return findMin(avlNode.leftNode);
         }
 
+    }
+
+    public void printTree(){
+        Map<Integer,LinkedList<Printer>> printMap = printTree(this,0);
+        int i = 1;
+        StringBuilder idBu = new StringBuilder();
+        StringBuilder linkBu = new StringBuilder();
+        LinkedList<Integer> nextLineIdSpaceNum = new LinkedList<>();
+        while (i<=maxIndex){
+            LinkedList<Printer> printers = printMap.get(i);
+            int last = 0;
+            for(Printer printer:printers){
+                int spaceNum;
+                if(CollectionUtils.isEmpty(nextLineIdSpaceNum)){
+                    spaceNum = 20;
+                }else {
+                    spaceNum = nextLineIdSpaceNum.removeFirst()-last;
+                }
+                last += spaceNum;
+                idBu.append(createSpace(spaceNum)).append(printer.getId());
+
+                if(!Strings.isNullOrEmpty(printer.getLeftChildLink())
+                        || !Strings.isNullOrEmpty(printer.getRightChildLink())){
+                    String links = linkBu.toString().replace(" ","");
+                    int spaceNum2 = idBu.length()-(idBu.lastIndexOf("\n")==-1?0:idBu.lastIndexOf("\n"))
+                                    -(printer.getId()+"").length()-linkBu.length()-links.length();
+                    linkBu.append(createSpace(spaceNum2));
+                    if(!Strings.isNullOrEmpty(printer.getLeftChildLink())){
+                        nextLineIdSpaceNum.add(spaceNum2-1);
+                        linkBu.append(printer.getLeftChildLink());
+                    }
+
+                    if(!Strings.isNullOrEmpty(printer.getRightChildLink())){
+                        if(!Strings.isNullOrEmpty(printer.getLeftChildLink())){
+                            nextLineIdSpaceNum.add(spaceNum2);
+                        }else {
+                            nextLineIdSpaceNum.add(spaceNum2+1);
+                        }
+                        linkBu.append(printer.getRightChildLink());
+                    }
+                }
+            }
+            idBu.append("\n");
+            idBu.append(linkBu).append("\n");
+            linkBu.setLength(0);
+            i++;
+//            String singleRes = idBu.toString();
+//            System.out.println(singleRes);
+        }
+        System.out.println(idBu);
+    }
+
+    private String createSpace(int num){
+        StringBuilder spaceBu = new StringBuilder();
+        for(int k=0;k<num;k++){
+            spaceBu.append(" ");
+        }
+        return spaceBu.toString();
+    }
+
+    //栈，用来记录路径
+    Map<Integer,LinkedList<Printer>> map = new TreeMap<>();
+    int maxIndex = 0;
+
+    private Map<Integer,LinkedList<Printer>> printTree(AVLNode avlNode,int index){
+
+        if(avlNode==null){
+            return null;
+        }
+
+        index++;
+        maxIndex = Math.max(maxIndex,index);
+        LinkedList tempList = map.get(index);
+        if(CollectionUtils.isEmpty(tempList)){
+            tempList = new LinkedList();
+            map.put(index,tempList);
+        }
+        Printer printer = new Printer();
+        tempList.add(printer);
+        printer.setId(avlNode.getId());
+        printer.setIndex(index);
+        if(avlNode.leftNode!=null){
+            printer.setLeftChildLink("/");
+        }
+        if(avlNode.rightNode!=null){
+            printer.setRightChildLink("\\");
+        }
+
+        printTree(avlNode.leftNode,index);
+
+
+        printTree(avlNode.rightNode,index);
+
+        return map;
+    }
+
+    @Setter
+    @Getter
+    private class Printer{
+        private Integer id;
+        private int index;
+        private String leftChildLink;
+        private String rightChildLink;
     }
 
 }

@@ -25,8 +25,8 @@ public class AVLNodeTest {
         tree = new AVLNode(40,40,null,null)
                 .add(41,41).add(45,45)
                 .add(30,30).add(44,44)
-                .add(46,46);
-        tree = tree.add(60,60);
+                .add(46,46)
+                .add(60,60);
         System.out.println();
     }
 
@@ -39,6 +39,12 @@ public class AVLNodeTest {
     @Test
     public void testRemove(){
         tree = tree.remove(46,tree);
+        System.out.println();
+    }
+
+    @Test
+    public void testPrint(){
+        tree.printTree();
         System.out.println();
     }
 
