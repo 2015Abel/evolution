@@ -124,7 +124,7 @@ public class BinaryNode<V> {
             tree.leftNode = remove(id,tree.leftNode);
         }
 
-        if(id==tree.id){
+        if(id.equals(tree.id)){
             MajorKeyValidator.del(tabName,id);
 
             //单子

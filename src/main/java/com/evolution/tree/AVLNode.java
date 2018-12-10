@@ -144,7 +144,7 @@ public class AVLNode<V>{
             }
         }
 
-        if(id==avlNode.id){
+        if(id.equals(avlNode.id)){
             if(avlNode.leftNode==null && avlNode.rightNode==null){
                 return null;
             }else if(avlNode.leftNode==null && avlNode.rightNode!=null){
@@ -194,7 +194,7 @@ public class AVLNode<V>{
                 }
                 lastIdPosition = position;
                 lastIdLen = idLen(printer.getId());
-                appendAt(idBu,position,printer.getId()+"");
+                appendAt(idBu,position,printer.getId()+"`");
 
                 if(!Strings.isNullOrEmpty(printer.getLeftChildLink())
                         || !Strings.isNullOrEmpty(printer.getRightChildLink())){
@@ -218,11 +218,11 @@ public class AVLNode<V>{
             idBu.setLength(0);
             linkBu.setLength(0);
             i++;
-//            String singleRes = idBu.toString();
-//            System.out.println(singleRes);
         }
 
-        map = new TreeMap<>();
+        // 数据还原
+        map.clear();
+        maxIndex=0;
     }
 
     private int idLen(Integer id){

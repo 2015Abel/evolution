@@ -22,11 +22,12 @@ public class AVLNodeTest {
 
     @Test
     public void testAdd(){
-        tree = new AVLNode(40,40,null,null)
-                .add(41,41).add(45,45)
-                .add(30,30).add(44,44)
-                .add(46,46)
-                .add(60,60);
+        tree = new AVLNode(400,400,null,null)
+                .add(410,410).add(450,450)
+                .add(300,300).add(440,440)
+                .add(460,460)
+                .add(600,600)
+                .add(455,455);
 //        tree = new AVLNode(7,7,null,null)
 //                .add(111,111).add(45,45)
 //                .add(2,2).add(44,44)
@@ -44,8 +45,8 @@ public class AVLNodeTest {
     @Test
     public void testRemove(){
         tree.printTree();
-        System.out.println("#####################");
-        tree = tree.remove(44,tree);
+        System.out.println("##########################################");
+        tree = tree.remove(440,tree);
         tree.printTree();
     }
 
