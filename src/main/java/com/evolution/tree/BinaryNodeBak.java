@@ -17,7 +17,7 @@ import java.util.LinkedList;
  */
 @Getter
 @Setter
-public class BinaryNode<V> {
+public class BinaryNodeBak<V> {
 
     private final String tabName = "t_usr";
 
@@ -28,11 +28,11 @@ public class BinaryNode<V> {
     private V val;
 
     // 左节点
-    private BinaryNode<V> leftNode;
+    private BinaryNodeBak<V> leftNode;
     // 右节点
-    private BinaryNode<V> rightNode;
+    private BinaryNodeBak<V> rightNode;
 
-    public BinaryNode(Integer id, V val, BinaryNode<V> leftNode, BinaryNode<V> rightNode) {
+    public BinaryNodeBak(Integer id, V val, BinaryNodeBak<V> leftNode, BinaryNodeBak<V> rightNode) {
         this.id = id;
         this.val = val;
         this.leftNode = leftNode;
@@ -45,13 +45,13 @@ public class BinaryNode<V> {
      * @param val
      * @return
      */
-    public BinaryNode<V> add(Integer id,V val){
+    public BinaryNodeBak<V> add(Integer id, V val){
         return add(id,val,this,true);
     }
 
-    private BinaryNode<V> add(Integer id,V val,BinaryNode<V> tree,boolean idCheck){
+    private BinaryNodeBak<V> add(Integer id, V val, BinaryNodeBak<V> tree, boolean idCheck){
         if(tree == null){
-            tree = new BinaryNode<>(id,val,null,null);
+            tree = new BinaryNodeBak<>(id,val,null,null);
         }
 
         if(idCheck){
@@ -83,7 +83,7 @@ public class BinaryNode<V> {
         return searchRange(min,max,collection,this);
     }
 
-    private Collection<V> searchRange(Integer min, Integer max, Collection<V> collection,BinaryNode<V> tree){//当前节点与min比较，如果大于min，递归查看当前节点的左节点
+    private Collection<V> searchRange(Integer min, Integer max, Collection<V> collection,BinaryNodeBak<V> tree){//当前节点与min比较，如果大于min，递归查看当前节点的左节点
         //当前节点与min比较，如果大于min，递归查看当前节点的左节点（如果有左节点的话）
         if(min<tree.getId() && tree.leftNode!=null){
             searchRange(min,max,collection,tree.leftNode);
@@ -107,11 +107,11 @@ public class BinaryNode<V> {
      * @param id
      * @return
      */
-    public BinaryNode<V> remove(Integer id){
+    public BinaryNodeBak<V> remove(Integer id){
         return remove(id,this);
     }
 
-    private BinaryNode<V> remove(Integer id,BinaryNode<V> tree){
+    private BinaryNodeBak<V> remove(Integer id, BinaryNodeBak<V> tree){
         if(tree==null){
             return null;
         }
@@ -136,7 +136,7 @@ public class BinaryNode<V> {
             //双子
             else if(tree.getLeftNode()!=null && tree.getRightNode()!=null){
                 //方便起见：将值改变，引用不动
-                BinaryNode<V> min = findMin(tree.rightNode);
+                BinaryNodeBak<V> min = findMin(tree.rightNode);
                 tree.id = min.id;
                 tree.val = min.val;
 
@@ -150,15 +150,15 @@ public class BinaryNode<V> {
         return tree;
     }
 
-    public BinaryNode<V> findMin() {
+    public BinaryNodeBak<V> findMin() {
         return findMin(this);
     }
 
-    private BinaryNode<V> findMin(BinaryNode<V> tree) {
+    private BinaryNodeBak<V> findMin(BinaryNodeBak<V> tree) {
         if(tree.leftNode==null){
             return tree;
         }
-        BinaryNode min = findMin(tree.leftNode);
+        BinaryNodeBak min = findMin(tree.leftNode);
         return min;
     }
 
@@ -173,9 +173,9 @@ public class BinaryNode<V> {
     }
 
     //栈，用来记录路径
-    LinkedList<BinaryNode<V>> nodeStack = new LinkedList<>();
+    LinkedList<BinaryNodeBak<V>> nodeStack = new LinkedList<>();
 
-    private Collection<V> sort(BinaryNode<V> tree,Collection<V> collection){
+    private Collection<V> sort(BinaryNodeBak<V> tree, Collection<V> collection){
         if(tree==null){
             return collection;
         }
@@ -183,7 +183,7 @@ public class BinaryNode<V> {
         nodeStack.add(tree);
         sort(tree.leftNode,collection);
         while (!CollectionUtils.isEmpty(nodeStack)){
-            BinaryNode<V> temp = nodeStack.removeLast();
+            BinaryNodeBak<V> temp = nodeStack.removeLast();
             collection.add(temp.getVal());
             if(temp.rightNode!=null){
                 sort(temp.rightNode,collection);
@@ -203,7 +203,7 @@ public class BinaryNode<V> {
 
     LinkedList<V> valList = new LinkedList<>();
 
-    private Collection<V> sort(BinaryNode<V> tree){
+    private Collection<V> sort(BinaryNodeBak<V> tree){
         if(tree==null){
             return valList;
         }
@@ -213,4 +213,5 @@ public class BinaryNode<V> {
         sort(tree.rightNode);
         return valList;
     }
+
 }

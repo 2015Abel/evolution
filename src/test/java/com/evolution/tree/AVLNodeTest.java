@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 /**
- * @description: BinaryNodeTest
+ * @description: BinaryNodeBakTest
  * @author: liuzijian
  * @date: 2018-11-27 15:08
  */
@@ -39,20 +39,6 @@ public class AVLNodeTest {
     @Test
     public void testFindMin(){
         AVLNode minNode = tree.findMin(tree);
-        System.out.println();
-    }
-
-    @Test
-    public void testRemove(){
-        tree.printTree();
-        System.out.println("##########################################");
-        tree = tree.remove(440,tree);
-        tree.printTree();
-    }
-
-    @Test
-    public void testPrint(){
-        tree.printTree();
         System.out.println();
     }
 

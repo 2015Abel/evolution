@@ -8,14 +8,14 @@ import org.junit.runners.JUnit4;
 import java.util.Collection;
 
 /**
- * @description: BinaryNodeTest
+ * @description: BinaryNodeBakTest
  * @author: liuzijian
  * @date: 2018-11-27 15:08
  */
 @RunWith(JUnit4.class)
-public class BinaryNodeTest {
+public class BinaryNodeBakTest {
 
-    BinaryNode tree;
+    BinaryNodeBak tree;
 
     @Before
     public void bef(){
@@ -24,7 +24,7 @@ public class BinaryNodeTest {
 
     @Test
     public void testAdd(){
-        tree = new BinaryNode(50,"50",null,null)
+        tree = new BinaryNodeBak(50,"50",null,null)
                 .add(30,"30")
                 .add(40,"40").add(20,"20")
                 .add(41,"41").add(35,"35")
@@ -40,7 +40,7 @@ public class BinaryNodeTest {
 
     @Test
     public void testFindMin(){
-        BinaryNode min = tree.findMin();
+        BinaryNodeBak min = tree.findMin();
         System.out.println();
     }
 
