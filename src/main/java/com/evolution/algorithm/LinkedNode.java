@@ -1,73 +1,84 @@
 package com.evolution.algorithm;
 
 /**
- * @description: 链表反转
+ * @description: LinkedNode
  * @author: liuzijian
- * @create: 2018-12-15 23:38
+ * @create: 2018-12-16 19:40
  **/
 public class LinkedNode {
-    private Integer id;
-    private LinkedNode next;
+    Integer id ;
+    LinkedNode next;
 
     public LinkedNode(Integer id) {
         this.id = id;
     }
 
-    public LinkedNode reverse(LinkedNode node){
+    /**
+     * 链表翻转，循环 + 双指针（pre、next）实现
+     * @param cur
+     * @return
+     */
+    public LinkedNode reverse(LinkedNode cur){
+        LinkedNode pre = null;
+
+        while (cur!=null){
+            LinkedNode next = cur.next; // 1.
+            cur.next = pre; // 2.
+            pre = cur;  // 3.
+            cur = next; // 4.
+        }
+
+        return pre;
+    }
+
+    /**
+     * 链表反转，递归实现
+     * @param node
+     * @return
+     */
+    public LinkedNode reverse2(LinkedNode node){
         if(node.next==null){
             return node;
         }
 
-        LinkedNode temp = reverse(node.next);
-        node.next.next = node;
+        LinkedNode newHead = reverse2(node.next);
+        node.next.next = node;  //node.next.next 换成 newHead.next 不行，因为node在递归中在追溯上一个节点，仔细体会下
         node.next = null;
-        return temp;
+        return newHead;
     }
 
-    public LinkedNode reverse2(LinkedNode node){
-        LinkedNode pre = null;
-        LinkedNode cur = node;
-        LinkedNode head = null;
-
-        while (cur!=null){
-            LinkedNode next = cur.next;
-            if(next==null){
-                head = cur;
-            }
-
-            cur.next = pre;
-            pre = cur;
-
-            cur = next;
+    public static LinkedNode init(int limit){
+        int begin = 1;
+        LinkedNode node = new LinkedNode(begin);
+        begin++;
+        LinkedNode next = new LinkedNode(begin);
+        node.next = next;
+        while (begin<limit){
+            begin++;
+            next.next = new LinkedNode(begin);
+            next = next.next;
         }
-
-        return head;
+        return node;
     }
 
-    public void print(){
-        print(this);
-    }
-
-    private void print(LinkedNode node){
-        if(node==null){
-            return;
+    public void show(){
+        System.out.print(id+"->");
+        LinkedNode tempNext = next;
+        while (tempNext!=null){
+            System.out.print(tempNext.id+"->");
+            tempNext = tempNext.next;
         }
-
-        System.out.print(node.id+"->");
-        print(node.next);
     }
 
     public static void main(String[] args) {
-        LinkedNode node1 = new LinkedNode(1);
-        LinkedNode node2 = new LinkedNode(2);
-        LinkedNode node3 = new LinkedNode(3);
-        node1.next = node2;
-        node2.next = node3;
+        LinkedNode node = LinkedNode.init(4);
+        node.show();
+        System.out.println("\nExecute reverse..");
+        LinkedNode reverseNode = node.reverse(node);
+        reverseNode.show();
 
-        node1.print();
-
-        System.out.println();
-        LinkedNode reverseNode = node1.reverse2(node1);
-        reverseNode.print();
+        System.out.println("\nExecute reverse2..");
+        LinkedNode reverseNode2 = reverseNode.reverse2(reverseNode);
+        reverseNode2.show();
     }
 }
