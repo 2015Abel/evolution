@@ -1,4 +1,4 @@
-package com.evolution.algorithm;
+package com.evolution.leetcode.linkedlist;
 
 import java.util.HashMap;
 import java.util.Map;
