@@ -1,7 +1,7 @@
 package com.evolution.leetcode.find;
 
 /**
- * @Description: 375. 猜数字大小 II
+ * @Description: 375. 猜数字大小 II  TODO
  *
  * 我们正在玩一个猜数游戏，游戏规则如下：
  * 我从 1 到 n 之间选择一个数字，你来猜我选了哪个数字。
@@ -25,32 +25,35 @@ package com.evolution.leetcode.find;
  * @Date: 2019/3/5 17:02
  */
 public class GuessNumAndPay {
+
+    /**
+     * ip[i][j] 表示从数字i到j覆盖任意一个数字，所需的最低话费
+     * 依然动态规划（背包）的思路
+     * @param n
+     * @return
+     */
     public int getMoneyAmount(int n) {
-        if(n==1){
-            return 0;
+        int[][] dp = new int[n+1][n+1];
+        for(int i = 2; i<=n; i++){
+            for(int j = i - 1; j > 0; j--){
+                if(j == i - 1){
+                    dp[j][i] = j;
+                    continue;
+                }
+                int globalMin = Integer.MAX_VALUE;
+                for(int k = j + 1; k < i; k++){
+                    int localMax = k + Math.max(dp[j][k-1],dp[k+1][i]);
+                    globalMin = Math.min(globalMin, localMax);
+                }
+                dp[j][i] = globalMin;
+            }
         }
-
-        int lastNum = n;
-        int midIdx,mid;
-        int min = 1;
-
-        int pay = 0;
-        while (lastNum>2){
-            midIdx = lastNum%2==0?lastNum/2:lastNum/2+1;
-            lastNum = lastNum - midIdx;
-
-            mid = min+midIdx-1;
-            pay += mid;
-            min = mid+1;
-        }
-
-
-        return pay;
+        return dp[1][n];
     }
 
     public static void main(String[] args) {
         GuessNumAndPay gap = new GuessNumAndPay();
-        int res = gap.getMoneyAmount(10);
+        int res = gap.getMoneyAmount(4);
         System.out.println(res);
     }
 }
