@@ -27,33 +27,20 @@ import java.util.Map;
  */
 public class CopyLinkedNode {
 
-    Map<Integer,Node> nodeMap = new HashMap<>();
-
     public Node copyRandomList(Node head) {
+        Node pre = null;
+        Node res = null;
+        while (head!=null){
+            Node node = new Node(head.val);
+            if(pre!=null){
+                pre.next = node;
+            }else {
+                res = node;
+            }
 
-        if(head==null){
-            return head;
-        }
-
-        Node res;
-        Node mapNode = nodeMap.get(head.val);
-        if(mapNode==null){
-            res = new Node();
-        }else {
-            res = mapNode;
-        }
-
-        res.val = head.val;
-        nodeMap.put(res.val,res);
-
-        if(head.next!=null){
-            Node next = copyRandomList(head.next);
-            res.next = next;
-        }
-
-        if(head.random!=null){
-            Node random = nodeMap.get(head.random.val);
-            res.random = random;
+            node.next = head.next;
+            head = head.next;
+            pre = node;
         }
 
         return res;
@@ -62,9 +49,13 @@ public class CopyLinkedNode {
     public static void main(String[] args) {
         CopyLinkedNode copyLinkedNode = new CopyLinkedNode();
 
-        Node node2 = new Node(2,null,null);
-        node2.random = node2;
-        Node node1 = new Node(1,node2,node2);
+        Node node1 = new Node(1);
+        Node node2 = new Node(2);
+        Node node3 = new Node(3);
+        node1.next = node1;
+        node2.next = node3;
+        node2.random = node1;
+
         Node res = copyLinkedNode.copyRandomList(node1);
         System.out.println();
     }
@@ -75,11 +66,9 @@ class Node {
     public Node next;
     public Node random;
 
-    public Node() {}
-
-    public Node(int _val,Node _next,Node _random) {
-        val = _val;
-        next = _next;
-        random = _random;
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
     }
 }
