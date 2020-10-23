@@ -29,18 +29,37 @@ public class CopyLinkedNode {
 
     public Node copyRandomList(Node head) {
         Node pre = null;
-        Node res = null;
+        Node next = null;
+
+        // 存储源和新节点的map关系
+        Map<Node,Node> sourceCopierMap = new HashMap<>();
+
         while (head!=null){
             Node node = new Node(head.val);
             if(pre!=null){
                 pre.next = node;
             }else {
-                res = node;
+                next = node;
             }
+
+            node.random = head.random;
+
+            sourceCopierMap.put(head,node);
 
             node.next = head.next;
             head = head.next;
             pre = node;
+        }
+
+        Node res = next;
+
+        // random指针替换
+        while (next!=null){
+            if(next.random!=null){
+                next.random = sourceCopierMap.get(next.random);
+            }
+
+            next = next.next;
         }
 
         return res;
@@ -52,7 +71,7 @@ public class CopyLinkedNode {
         Node node1 = new Node(1);
         Node node2 = new Node(2);
         Node node3 = new Node(3);
-        node1.next = node1;
+        node1.next = node2;
         node2.next = node3;
         node2.random = node1;
 
