@@ -1,4 +1,5 @@
-package com.evolution.leetcode.linkedlist;
+package com.evolution.leetcode.linkedlist.circleNode;
+
 
 /**
  * @program: evolution
@@ -14,7 +15,7 @@ package com.evolution.leetcode.linkedlist;
  **/
 public class CircleLinkedNode {
     /**
-     * 这种方法属于抖机灵，钻空子
+     * 这种方法属于抖机灵，钻题目空子
      * @param head
      * @return
      */
@@ -34,6 +35,38 @@ public class CircleLinkedNode {
         return res;
     }
 
+
+    /***
+     * @Description 快慢指针
+     * @Author liuzijian
+     * @Date 5:25 下午 2020/10/23
+     * @Param [head]
+     * @return boolean
+     **/
+    public boolean hasCycle2(ListNode head) {
+        boolean res = false;
+        ListNode slow = head;
+        ListNode fast = null;
+        if(head!=null){
+            fast = head.next;
+        }
+
+        while (slow!=null){
+            if(fast==null || fast.next==null){
+                break;
+            }
+
+            if(slow.equals(fast)){
+                res = true;
+                break;
+            }
+
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         ListNode node0 = new ListNode(1);
         ListNode node1 = new ListNode(2);
@@ -43,8 +76,8 @@ public class CircleLinkedNode {
         node0.next = node1;
         node1.next = node2;
         node2.next = node3;
-        node3.next = node2;
-        System.out.println(new CircleLinkedNode().hasCycle(node0));
+        node3.next = node1;
+        System.out.println(new CircleLinkedNode().hasCycle2(node0));
     }
 }
 
